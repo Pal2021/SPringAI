@@ -16,6 +16,6 @@ public class GeminiController {
     @PostMapping("/generate")
     public String generate(@RequestBody Map<String, String> request) {
         String prompt = request.get("prompt");
-        return geminiService.getCompletion(prompt);
+        return geminiService.basicChat(prompt);
     }
 }
