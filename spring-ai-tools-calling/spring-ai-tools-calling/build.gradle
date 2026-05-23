@@ -1,0 +1,39 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.5'        // ✅ Stable + compatible
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.springaitools'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()                                        // ✅ Spring AI 1.x is fully GA on Maven Central
+}
+
+dependencyManagement {
+	imports {
+		// 💡 Upgraded to 1.1.6 for critical security patches & better auto-config stability
+		mavenBom "org.springframework.ai:spring-ai-bom:1.1.6"
+	}
+}
+
+dependencies {
+	// 💡 Changed to web starter if you plan to build APIs/Rest endpoints for your LLM interactions
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// ✅ The official starter for Google GenAI (Gemini)
+	implementation 'org.springframework.ai:spring-ai-starter-model-google-genai'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
